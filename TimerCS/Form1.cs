@@ -14,7 +14,7 @@ namespace TimerCS
     {
         NumericUpDown[] numerics;
         Label[] labels;
-        Button starter;
+        Button button;
         Timer timer;
 
         public Form1()
@@ -35,7 +35,7 @@ namespace TimerCS
                 numerics[i] = n;
 
                 Label l = new Label();
-                l.Location = new Point( 3 + i * 2 , 10 + i * 30);
+                l.Location = new Point( 3 + i * 2 , 12 + i * 30);
                 labels[i] = l;
 
                 this.Controls.Add(numerics[i]);
@@ -47,8 +47,16 @@ namespace TimerCS
             labels[1].Text = "Mins" ;
             labels[2].Text = "Secs" ;
 
-            
+            button = new Button();
+            button.Text = "Start";
+            button.Location = new Point(175, 38);
+            this.Controls.Add(button);
+            button.Click += b_click;
 
+        }
+
+        private void b_click(object sender, EventArgs e){
+            
         }
 
     }
