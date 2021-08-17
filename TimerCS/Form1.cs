@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Media;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -6,20 +7,24 @@ namespace TimerCS
 {
     public partial class Form1 : Form
     {
+        #region Definitions
+
         /// <summary>
         /// Controls to set time
         /// </summary>
         NumericUpDown[] numerics;
 
         /// <summary>
-        /// Just labels
+        /// Just labels + label to display time
         /// </summary>
         Label[] labels;
+        Label timeLeft;
 
         /// <summary>
         /// Main button to do
         /// </summary>
         Button button;
+        Button newTime;
 
         /// <summary>
         /// Timer to count
@@ -27,20 +32,26 @@ namespace TimerCS
         System.Windows.Forms.Timer timer;
 
         /// <summary>
-        /// Time that user set
+        /// sound that plays when time is over
         /// </summary>
-        int userTime = 0;
+        SoundPlayer soundOfTheEnd;
 
         /// <summary>
-        /// Time that timer count
+        /// Time that user set
         /// </summary>
-        int timerTime = 0;
+        int hours = 0;
+        int mins = 0;
+        int secs = 0;
+
+        #endregion
 
         public Form1()
         {
             InitializeComponent();
             init();
         }
+
+        #region Methods related with form
 
         /// <summary>
         /// Initializing of controls
@@ -71,16 +82,29 @@ namespace TimerCS
 
             button = new Button();
             button.Text = "Start";
-            button.Location = new Point(175, 20);
+            button.Location = new Point(175, 8);
             button.Click += b_click;
             this.Controls.Add(button);
+
+            newTime = new Button();
+            newTime.Text = "Refresh";
+            newTime.Location = new Point(175, 68);
+            newTime.Click += nt_click;
+            this.Controls.Add(newTime);
+
+            timeLeft = new Label();
+            timeLeft.Location = new Point(180, 34);
+            timeLeft.Size = new Size(100, 30);
+            timeLeft.Text = "Time left: ";
+            this.Controls.Add(timeLeft);
 
             timer = new Timer();
             timer.Interval = 1000;
             timer.Tick += t_tick;
 
-        }
+            soundOfTheEnd = new SoundPlayer("resources\\sound.wav");
 
+        }
 
         /// <summary>
         /// Button click
@@ -93,11 +117,20 @@ namespace TimerCS
                 button.Text = "Start";
             }
             else {
+                if (hours == 0 && mins == 0 && secs == 0) timeRead();
                 timer.Start();
                 button.Text = "Stop";
             }
         }
         
+        /// <summary>
+        /// Click of refresh button
+        /// </summary>
+        private void nt_click(object sender, EventArgs e){
+            timeRead();
+            timeDisplay();
+        }
+
         /// <summary>
         /// timer tick
         /// </summary>
@@ -105,7 +138,48 @@ namespace TimerCS
         /// <param name="e"></param>
         private void t_tick(object sender, EventArgs e){
             
+            timeDisplay();
+
+            if (secs == 0){
+                if (mins == 0){
+                    if (hours == 0){
+                        timer.Stop();
+                        soundOfTheEnd.Play();
+                        MessageBox.Show("Time is over");
+                        button.Text = "Start";
+                        timeDisplay();
+                        return;
+                    }
+                    hours--;
+                    mins = 59;
+                }
+                mins--;
+                secs = 59;
+            }
+            else secs--;
+
         }
 
+        #endregion
+
+        #region everything else
+        
+        /// <summary>
+        /// Updating timer on form
+        /// </summary>
+        private void timeDisplay(){
+            timeLeft.Text = $"Time left:\n{hours}h {mins}m {secs}s";
+        }
+
+        /// <summary>
+        /// Read time from numerics
+        /// </summary>
+        private void timeRead(){
+            hours = Convert.ToInt32(numerics[0].Value);
+            mins = Convert.ToInt32(numerics[1].Value);
+            secs = Convert.ToInt32(numerics[2].Value);
+        }
+
+        #endregion
     }
 }

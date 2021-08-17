@@ -30,7 +30,9 @@
         {
             this.components = new System.ComponentModel.Container();
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(260, 200);
+            this.ClientSize = new System.Drawing.Size(260, 99);
+            this.MaximumSize = new System.Drawing.Size(274, 138);;
+            this.MinimumSize = new System.Drawing.Size(274, 138);;
             this.Text = "Timer";
         }
 
