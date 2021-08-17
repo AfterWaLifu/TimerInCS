@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace TimerCS
@@ -15,7 +9,8 @@ namespace TimerCS
         NumericUpDown[] numerics;
         Label[] labels;
         Button button;
-        Timer timer;
+        System.Windows.Forms.Timer timer;
+        int i = 0;
 
         public Form1()
         {
@@ -49,13 +44,32 @@ namespace TimerCS
 
             button = new Button();
             button.Text = "Start";
-            button.Location = new Point(175, 38);
-            this.Controls.Add(button);
+            button.Location = new Point(175, 20);
             button.Click += b_click;
+            this.Controls.Add(button);
+
+            timer = new Timer();
+            timer.Interval = 1000;
+            timer.Tick += t_tick;
 
         }
 
         private void b_click(object sender, EventArgs e){
+            if (timer.Enabled) {
+                timer.Stop();
+                button.Text = "Start";
+            }
+            else {
+                timer.Start();
+                button.Text = "Stop";
+            }
+        }
+
+        private void t_tick(object sender, EventArgs e){
+            
+        }
+
+        private void secondsToOthers(){
             
         }
 
