@@ -6,11 +6,35 @@ namespace TimerCS
 {
     public partial class Form1 : Form
     {
+        /// <summary>
+        /// Controls to set time
+        /// </summary>
         NumericUpDown[] numerics;
+
+        /// <summary>
+        /// Just labels
+        /// </summary>
         Label[] labels;
+
+        /// <summary>
+        /// Main button to do
+        /// </summary>
         Button button;
+
+        /// <summary>
+        /// Timer to count
+        /// </summary>
         System.Windows.Forms.Timer timer;
-        int i = 0;
+
+        /// <summary>
+        /// Time that user set
+        /// </summary>
+        int userTime = 0;
+
+        /// <summary>
+        /// Time that timer count
+        /// </summary>
+        int timerTime = 0;
 
         public Form1()
         {
@@ -18,6 +42,9 @@ namespace TimerCS
             init();
         }
 
+        /// <summary>
+        /// Initializing of controls
+        /// </summary>
         private void init(){
             numerics = new NumericUpDown[3];
             labels = new Label[3];
@@ -54,6 +81,12 @@ namespace TimerCS
 
         }
 
+
+        /// <summary>
+        /// Button click
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void b_click(object sender, EventArgs e){
             if (timer.Enabled) {
                 timer.Stop();
@@ -64,12 +97,13 @@ namespace TimerCS
                 button.Text = "Stop";
             }
         }
-
+        
+        /// <summary>
+        /// timer tick
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void t_tick(object sender, EventArgs e){
-            
-        }
-
-        private void secondsToOthers(){
             
         }
 
